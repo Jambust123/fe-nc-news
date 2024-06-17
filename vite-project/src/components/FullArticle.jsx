@@ -1,13 +1,14 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { CommentList } from "./CommentList";
 
-export const FullArticle = ({ articleDetails }) => {
+export const FullArticle = ({ id, articleDetails }) => {
   return (
-    <Card sx={{ maxWidth: 800, margin: 'auto', mt: 4, p: 2 }}>
+    <Card sx={{ maxWidth: 800, margin: "auto", mt: 4, p: 2 }}>
       <CardContent>
         <Typography variant="h4" component="div" gutterBottom>
           {articleDetails.topic}
@@ -36,6 +37,7 @@ export const FullArticle = ({ articleDetails }) => {
             {new Date(articleDetails.created_at).toLocaleDateString()}
           </Typography>
         </Box>
+      <CommentList id={id} />
       </CardContent>
     </Card>
   );

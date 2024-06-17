@@ -31,3 +31,12 @@ const ncnewsAPI= axios.create({
     })
   }
 
+  export const getCommentsByArticleId = (id) => {
+    return ncnewsAPI.get(`/articles/${id}/comments`)
+    .then((res) => {
+      return res.data.comments;
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
