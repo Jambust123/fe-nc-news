@@ -2,7 +2,7 @@ import { useState } from "react";
 import { DropDown } from "./DropDown";
 import { ArticleList } from "./ArticleList";
 
-export const Homepage = () => {
+export const Homepage = ({setArticleId}) => {
   const [topics, setTopics] = useState("");
 
   return (
@@ -13,7 +13,7 @@ export const Homepage = () => {
         <DropDown setTopics={setTopics} />
       </label>
       <ul>
-        <ArticleList topics={topics} />
+        <ArticleList topics={topics} setArticleId={setArticleId}/>
       </ul>
     </div>
   );

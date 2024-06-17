@@ -11,7 +11,7 @@ export const ArticleCard = ({ article, setArticleId }) => {
   if (!article) return null;
   const handleClick = (event) => {
     setArticleId(event.target.id);
-    Navigate(`/articles/${event.target.id}`);
+    navigate(`/article/${event.target.id}`);
   };
 
   return (
