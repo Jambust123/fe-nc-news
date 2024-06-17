@@ -21,3 +21,13 @@ const ncnewsAPI= axios.create({
       console.log(err);
     })
   }
+
+  export const getArticleById = (article_id) => {
+    return ncnewsAPI.get(`/articles/${article_id}`)
+    .then((res) => {
+      return res.data.article;
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+

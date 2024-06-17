@@ -7,7 +7,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [articleId, setArticleId] = useState("");
 
   return (
     <>
@@ -15,8 +15,8 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route exact path="/" element={<Login/>} />
-      <Route exact path="/homepage" element={<Homepage/>} />
-      <Route exact path="/article/:id" element={<Article/>} />      
+      <Route exact path="/homepage" element={<Homepage setArticleId={setArticleId} />} />
+      <Route exact path="/article/:id" element={<Article articleId={articleId} />} />      
     </Routes>
     </BrowserRouter>
     </>
