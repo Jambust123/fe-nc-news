@@ -5,9 +5,9 @@ import { FullArticle } from "./FullArticle";
 
 export const Article = (articleId) => {
   const { id } = useParams();
+  parseInt(id);
   const [articleDetails, setArticleDetails] = useState({});
-  console.log(articleDetails);
-
+console.log(typeof id);
   useEffect(() => {
     getArticleById(id).then((data) => {
       setArticleDetails(data[0]);
@@ -18,7 +18,7 @@ export const Article = (articleId) => {
 
   return (
   <>
-  <FullArticle articleDetails={articleDetails}/>
+  <FullArticle id={id} articleDetails={articleDetails}/>
   </>
   );
 };
