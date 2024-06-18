@@ -1,10 +1,10 @@
 import { getTopics } from "../utils/api";
-import Select from "react-select";
 import { useState, useEffect } from "react";
+import { TextField, MenuItem } from '@mui/material';
 
 export const DropDown = ({ setTopics }) => {
   const handleChange = (event) => {
-    setTopics(event.value);
+    setTopics(event.target.value);
   };
 
   const [options, setOptions] = useState([]);
@@ -16,5 +16,21 @@ export const DropDown = ({ setTopics }) => {
       setOptions(newOptions);
     });
   }, []);
-  return <Select options={options} onChange={handleChange} />;
+
+  return (
+    <TextField
+      select
+      label="Select Topic"
+      value=""
+      onChange={handleChange}
+      variant="outlined"
+      fullWidth
+    >
+      {options.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label}
+        </MenuItem>
+      ))}
+    </TextField>
+  );
 };

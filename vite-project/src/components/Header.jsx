@@ -15,8 +15,11 @@ const handleClick = (event) => {
         <IconButton edge="start" color="inherit" sx={{ mr: 2 }}>
           <img src="../../public/downloadfile-3.jpg" alt="logo" style={{ height: '50px' }}/>
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
           Hello World!
+        </Typography>
+        <Typography variant="h6" component="div" sx={{ ml: "auto" }}>
+        Your Daily Dose of Global Insights
         </Typography>
       </Toolbar>
     </AppBar>
