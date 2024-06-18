@@ -1,42 +1,66 @@
-import axios from 'axios';
+import axios from "axios";
 
-const ncnewsAPI= axios.create({
-    baseURL: "https://jakesnewsapi.onrender.com/api",
-  });
+const ncnewsAPI = axios.create({
+  baseURL: "https://jakesnewsapi.onrender.com/api",
+});
 
-  export const getTopics = () => {
-    return ncnewsAPI.get('/topics')
+export const getTopics = () => {
+  return ncnewsAPI
+    .get("/topics")
     .then((res) => {
       return res.data.topic;
-    }).catch((err) => {
-      console.log(err);
     })
-  }
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-  export const getAllArticles = () => {
-    return ncnewsAPI.get('/articles')
+export const getAllArticles = () => {
+  return ncnewsAPI
+    .get("/articles")
     .then((res) => {
       return res.data.allArticles;
-    }).catch((err) => {
-      console.log(err);
     })
-  }
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-  export const getArticleById = (article_id) => {
-    return ncnewsAPI.get(`/articles/${article_id}`)
+export const getArticleById = (article_id) => {
+  return ncnewsAPI
+    .get(`/articles/${article_id}`)
     .then((res) => {
       return res.data.article;
-    }).catch((err) => {
-      console.log(err);
     })
-  }
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-  export const getCommentsByArticleId = (id) => {
-    return ncnewsAPI.get(`/articles/${id}/comments`)
+export const getCommentsByArticleId = (id) => {
+  return ncnewsAPI
+    .get(`/articles/${id}/comments`)
     .then((res) => {
       return res.data.comments;
-    }).catch((err) => {
-      console.log(err);
     })
-  }
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
+export const postLike = (numericalId, vote) => {
+  console.log(vote);
+  console.log(numericalId);
+  return ncnewsAPI
+    .patch(`/articles/${numericalId}`, vote)
+    .then((res) => {
+      console.log(res);
+      return res.data.article;
+    })
+    .catch((err) => {
+      console.error(
+        "Error posting like:",
+        err.response ? err.response.data : err.message
+      );
+    });
+};

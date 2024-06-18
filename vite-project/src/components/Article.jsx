@@ -7,18 +7,18 @@ export const Article = (articleId) => {
   const { id } = useParams();
   parseInt(id);
   const [articleDetails, setArticleDetails] = useState({});
-console.log(typeof id);
+
   useEffect(() => {
     getArticleById(id).then((data) => {
       setArticleDetails(data[0]);
     });
-  }, [id]);
+  }, []);
 
 
 
   return (
   <>
-  <FullArticle id={id} articleDetails={articleDetails}/>
+  <FullArticle key={id} id={id} articleDetails={articleDetails} setArticleDetails={setArticleDetails}/>
   </>
   );
 };
