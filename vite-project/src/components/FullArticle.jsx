@@ -4,11 +4,40 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Badge from "@mui/material/Badge";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useState, useEffect } from "react";
 import { CommentList } from "./CommentList";
+import { postLike } from "../utils/api";
 
 export const FullArticle = ({ id, articleDetails }) => {
+  const [like, setLike] = useState(false);
+  const [vote, setVotes] = useState(Number(articleDetails.votes) || null);
+  const [isLoading, setIsLoading] = useState(false);
+  const numericalId = Number(id);
+
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    if (!like) {
+      setLike(true);
+      const newVoteCount = vote + 1;
+      setVotes(newVoteCount);
+
+      postLike(numericalId, { inc_votes: newVoteCount })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error("Error posting like:", error);
+        });
+    }
+  };
+
+  
   return (
-    <Card sx={{ maxWidth: 800, margin: "auto", mt: 4, p: 2 }}>
+        <Card sx={{ maxWidth: 800, margin: "auto", mt: 4, p: 2 }}>
       <CardContent>
         <Typography variant="h4" component="div" gutterBottom>
           {articleDetails.topic}
@@ -30,14 +59,19 @@ export const FullArticle = ({ id, articleDetails }) => {
           {articleDetails.body}
         </Typography>
         <Box display="flex" justifyContent="space-between" mt={2}>
-          <Typography variant="h6" component="div">
-            Votes: {articleDetails.votes}
-          </Typography>
+          <Badge
+            onClick={handleClick}
+            badgeContent={vote}
+            max={99}
+            sx={{ cursor: "pointer" }}
+          >
+            {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </Badge>
           <Typography variant="h6" component="div">
             {new Date(articleDetails.created_at).toLocaleDateString()}
           </Typography>
         </Box>
-      <CommentList id={id} />
+        <CommentList id={id} />
       </CardContent>
     </Card>
   );
