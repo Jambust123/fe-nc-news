@@ -2,6 +2,7 @@ import { getTopics } from "../utils/api";
 import { useState, useEffect } from "react";
 import { TextField, MenuItem } from '@mui/material';
 
+
 export const DropDown = ({ setTopics }) => {
   const handleChange = (event) => {
     setTopics(event.target.value);
@@ -32,5 +33,6 @@ export const DropDown = ({ setTopics }) => {
         </MenuItem>
       ))}
     </TextField>
+
   );
 };

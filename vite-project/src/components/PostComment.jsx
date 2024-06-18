@@ -1,6 +1,5 @@
 import * as React from "react";
-import { styled } from "@mui/joy/styles";
-import Input from "@mui/joy/Input";
+import { Input } from "@mui/material";
 import { postComment } from "../utils/api";
 import LocalPostOfficeRoundedIcon from "@mui/icons-material/LocalPostOfficeRounded";
 
