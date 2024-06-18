@@ -11,7 +11,8 @@ export const getTopics = () => {
       return res.data.topic;
     })
     .catch((err) => {
-      console.log(err);
+    "Error posting like:",
+        err.response ? err.response.data : err.message
     });
 };
 
@@ -22,7 +23,8 @@ export const getAllArticles = () => {
       return res.data.allArticles;
     })
     .catch((err) => {
-      console.log(err);
+    "Error posting like:",
+        err.response ? err.response.data : err.message
     });
 };
 
@@ -33,7 +35,8 @@ export const getArticleById = (article_id) => {
       return res.data.article;
     })
     .catch((err) => {
-      console.log(err);
+    "Error posting like:",
+        err.response ? err.response.data : err.message
     });
 };
 
@@ -44,22 +47,51 @@ export const getCommentsByArticleId = (id) => {
       return res.data.comments;
     })
     .catch((err) => {
-      console.log(err);
+    "Error posting like:",
+        err.response ? err.response.data : err.message
     });
 };
 
-export const postLike = (numericalId, vote) => {
-  console.log(vote);
-  console.log(numericalId);
+export const postLike = (id, vote) => {
   return ncnewsAPI
-    .patch(`/articles/${numericalId}`, vote)
+    .patch(`/articles/${id}`, vote)
     .then((res) => {
-      console.log(res);
       return res.data.article;
     })
     .catch((err) => {
       console.error(
         "Error posting like:",
+        err.response ? err.response.data : err.message
+      );
+    });
+};
+
+export const postComment = (numericalId, commentBody) => {
+  console.log(numericalId, commentBody);
+  return ncnewsAPI
+   .post(`/articles/${numericalId}/comments`, commentBody)
+   .then((res) => {
+    console.log(res);
+      return res.data.comment;
+    })
+   .catch((err) => {
+      console.error(
+        "Error posting comment:",
+        err.response ? err.response.data : err.message
+      );
+    });
+}
+
+export const deleteComment = (numericalId) => {
+  return ncnewsAPI
+   .delete(`/comments/${numericalId}`)
+   .then((res) => {
+    console.log(res.data);
+      return res.data.comment;
+    })
+   .catch((err) => {
+      console.error(
+        "Error deleting comment:",
         err.response ? err.response.data : err.message
       );
     });

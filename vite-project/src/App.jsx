@@ -11,8 +11,8 @@ function App() {
 
   return (
     <>
-    <Header />
     <BrowserRouter>
+    <Header />
     <Routes>
       <Route exact path="/" element={<Login/>} />
       <Route exact path="/homepage" element={<Homepage setArticleId={setArticleId} />} />

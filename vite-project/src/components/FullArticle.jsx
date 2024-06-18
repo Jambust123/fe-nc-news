@@ -9,17 +9,16 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useState, useEffect } from "react";
 import { CommentList } from "./CommentList";
+import { PostComment } from "./PostComment"
 import { postLike } from "../utils/api";
 
 export const FullArticle = ({ id, articleDetails }) => {
   const [like, setLike] = useState(false);
   const [vote, setVotes] = useState(Number(articleDetails.votes) || null);
-  const [isLoading, setIsLoading] = useState(false);
   const numericalId = Number(id);
 
 
   const handleClick = (event) => {
-    event.preventDefault();
     if (!like) {
       setLike(true);
       const newVoteCount = vote + 1;
@@ -27,7 +26,7 @@ export const FullArticle = ({ id, articleDetails }) => {
 
       postLike(numericalId, { inc_votes: newVoteCount })
         .then((response) => {
-          console.log(response);
+          setVotes(response.votes)
         })
         .catch((error) => {
           console.error("Error posting like:", error);
@@ -71,6 +70,7 @@ export const FullArticle = ({ id, articleDetails }) => {
             {new Date(articleDetails.created_at).toLocaleDateString()}
           </Typography>
         </Box>
+        <PostComment id = {id}/>
         <CommentList id={id} />
       </CardContent>
     </Card>
