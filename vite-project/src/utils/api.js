@@ -96,3 +96,15 @@ export const deleteComment = (numericalId) => {
       );
     });
 };
+
+export const getArticlesByTopics = (topic) => {
+  return ncnewsAPI
+   .get(`/articles?topic=${topic}`)
+   .then((res) => {
+      return res.data.allArticles;
+    })
+   .catch((err) => {
+    "Error posting like:",
+        err.response ? err.response.data : err.message
+    });
+}

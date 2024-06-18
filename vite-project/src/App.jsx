@@ -16,6 +16,7 @@ function App() {
     <Routes>
       <Route exact path="/" element={<Login/>} />
       <Route exact path="/homepage" element={<Homepage setArticleId={setArticleId} />} />
+      <Route exact path="/homepage/:topic" element={<Homepage setArticleId={setArticleId} />} />
       <Route exact path="/article/:id" element={<Article articleId={articleId} />} />      
     </Routes>
     </BrowserRouter>
