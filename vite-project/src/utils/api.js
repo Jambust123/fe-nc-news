@@ -86,7 +86,6 @@ export const deleteComment = (numericalId) => {
   return ncnewsAPI
    .delete(`/comments/${numericalId}`)
    .then((res) => {
-    console.log(res.data);
       return res.data.comment;
     })
    .catch((err) => {
