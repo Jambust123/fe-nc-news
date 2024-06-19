@@ -1,8 +1,9 @@
 import { getTopics } from "../utils/api";
 import { useState, useEffect } from "react";
-import { TextField, MenuItem } from '@mui/material';
+import { TextField, MenuItem, Box } from '@mui/material';
+import { Sort } from "./Sort";
 
-export const DropDown = ({ setTopics }) => {
+export const DropDown = ({ setTopics, setArticles}) => {
   const handleChange = (event) => {
     setTopics(event.target.value);
   };
@@ -18,19 +19,22 @@ export const DropDown = ({ setTopics }) => {
   }, []);
 
   return (
-    <TextField
-      select
-      label="Select Topic"
-      value=""
-      onChange={handleChange}
-      variant="outlined"
-      fullWidth
-    >
-      {options.map((option) => (
-        <MenuItem key={option.value} value={option.value}>
-          {option.label}
-        </MenuItem>
-      ))}
-    </TextField>
+    <Box display="flex" alignItems="center" gap={2}>
+      <TextField
+        select
+        label="Select Topic"
+        value=""
+        onChange={handleChange}
+        variant="outlined"
+        fullWidth
+      >
+        {options.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
+      <Sort setArticles={setArticles}/>
+    </Box>
   );
 };
