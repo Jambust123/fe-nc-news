@@ -80,9 +80,10 @@ export const postComment = (numericalId, commentBody) => {
 
 export const deleteComment = (numericalId) => {
   return ncnewsAPI
-    .delete(`/comments/${numericalId}`)
-    .then((res) => {
-      console.log(res.data);
+
+   .delete(`/comments/${numericalId}`)
+   .then((res) => {
+
       return res.data.comment;
     })
     .catch((err) => {
