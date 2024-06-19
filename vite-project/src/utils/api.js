@@ -11,8 +11,7 @@ export const getTopics = () => {
       return res.data.topic;
     })
     .catch((err) => {
-    "Error posting like:",
-        err.response ? err.response.data : err.message
+      "Error posting like:", err.response ? err.response.data : err.message;
     });
 };
 
@@ -23,8 +22,7 @@ export const getAllArticles = () => {
       return res.data.allArticles;
     })
     .catch((err) => {
-    "Error posting like:",
-        err.response ? err.response.data : err.message
+      "Error posting like:", err.response ? err.response.data : err.message;
     });
 };
 
@@ -35,8 +33,7 @@ export const getArticleById = (article_id) => {
       return res.data.article;
     })
     .catch((err) => {
-    "Error posting like:",
-        err.response ? err.response.data : err.message
+      "Error posting like:", err.response ? err.response.data : err.message;
     });
 };
 
@@ -47,8 +44,7 @@ export const getCommentsByArticleId = (id) => {
       return res.data.comments;
     })
     .catch((err) => {
-    "Error posting like:",
-        err.response ? err.response.data : err.message
+      "Error posting like:", err.response ? err.response.data : err.message;
     });
 };
 
@@ -69,27 +65,27 @@ export const postLike = (id, vote) => {
 export const postComment = (numericalId, commentBody) => {
   console.log(numericalId, commentBody);
   return ncnewsAPI
-   .post(`/articles/${numericalId}/comments`, commentBody)
-   .then((res) => {
-    console.log(res);
+    .post(`/articles/${numericalId}/comments`, commentBody)
+    .then((res) => {
+      console.log(res);
       return res.data.comment;
     })
-   .catch((err) => {
+    .catch((err) => {
       console.error(
         "Error posting comment:",
         err.response ? err.response.data : err.message
       );
     });
-}
+};
 
 export const deleteComment = (numericalId) => {
   return ncnewsAPI
-   .delete(`/comments/${numericalId}`)
-   .then((res) => {
-    console.log(res.data);
+    .delete(`/comments/${numericalId}`)
+    .then((res) => {
+      console.log(res.data);
       return res.data.comment;
     })
-   .catch((err) => {
+    .catch((err) => {
       console.error(
         "Error deleting comment:",
         err.response ? err.response.data : err.message
@@ -99,12 +95,77 @@ export const deleteComment = (numericalId) => {
 
 export const getArticlesByTopics = (topic) => {
   return ncnewsAPI
-   .get(`/articles?topic=${topic}`)
-   .then((res) => {
+    .get(`/articles?topic=${topic}`)
+    .then((res) => {
       return res.data.allArticles;
     })
-   .catch((err) => {
-    "Error posting like:",
-        err.response ? err.response.data : err.message
+    .catch((err) => {
+      "Error posting like:", err.response ? err.response.data : err.message;
     });
-}
+};
+
+export const getArticlesByDateAsc = () => {
+  return ncnewsAPI
+    .get(`/articles?sort_by=date&order=asc`)
+    .then((res) => {
+      return res.data.allArticles;
+    })
+    .catch((err) => {
+      "Error posting like:", err.response ? err.response.data : err.message;
+    });
+};
+
+export const getArticlesByDateDsc = () => {
+  return ncnewsAPI
+    .get(`/articles?sort_by=date&order=desc`)
+    .then((res) => {
+      return res.data.allArticles;
+    })
+    .catch((err) => {
+      "Error posting like:", err.response ? err.response.data : err.message;
+    });
+};
+
+export const getArticlesByCommentNoAsc = () => {
+  return ncnewsAPI
+    .get(`/articles?sort_by=comment_count&order=asc`)
+    .then((res) => {
+      return res.data.allArticles;
+    })
+    .catch((err) => {
+      "Error posting like:", err.response ? err.response.data : err.message;
+    });
+};
+
+export const getArticlesByCommentNoDsc = () => {
+  return ncnewsAPI
+    .get(`/articles?sort_by=comment_count&order=desc`)
+    .then((res) => {
+      return res.data.allArticles;
+    })
+    .catch((err) => {
+      "Error posting like:", err.response ? err.response.data : err.message;
+    });
+};
+
+export const getArticlesByVoteAsc = () => {
+  return ncnewsAPI
+    .get(`/articles?sort_by=votes&order=asc`)
+    .then((res) => {
+      return res.data.allArticles;
+    })
+    .catch((err) => {
+      "Error posting like:", err.response ? err.response.data : err.message;
+    });
+};
+
+export const getArticlesByVoteDsc = () => {
+  return ncnewsAPI
+    .get(`/articles?sort_by=votes&order=desc`)
+    .then((res) => {
+      return res.data.allArticles;
+    })
+    .catch((err) => {
+      "Error posting like:", err.response ? err.response.data : err.message;
+    });
+};

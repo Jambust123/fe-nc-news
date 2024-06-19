@@ -5,8 +5,7 @@ import { ArticleCard } from "./ArticleCard";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 
-export const ArticleList = ({ topics, setArticleId }) => {
-  const [articles, setArticles] = useState([]);
+export const ArticleList = ({ topics, setArticleId, articles, setArticles }) => {
   const navigate = useNavigate();
 
 

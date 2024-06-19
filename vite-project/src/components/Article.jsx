@@ -7,7 +7,6 @@ export const Article = (articleId) => {
   const { id } = useParams();
   parseInt(id);
   const [articleDetails, setArticleDetails] = useState({});
-
   useEffect(() => {
     getArticleById(id).then((data) => {
       setArticleDetails(data[0]);

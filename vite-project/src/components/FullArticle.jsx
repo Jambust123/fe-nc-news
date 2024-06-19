@@ -7,36 +7,61 @@ import Box from "@mui/material/Box";
 import Badge from "@mui/material/Badge";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useState, useEffect } from "react";
 import { CommentList } from "./CommentList";
-import { PostComment } from "./PostComment"
+import { PostComment } from "./PostComment";
 import { postLike } from "../utils/api";
 
-export const FullArticle = ({ id, articleDetails }) => {
+export const FullArticle = ({ id, articleDetails, setArticleDetails }) => {
   const [like, setLike] = useState(false);
-  const [vote, setVotes] = useState(Number(articleDetails.votes) || null);
+  const [vote, setVotes] = useState(Number(articleDetails.votes) || 0);
+  const [loading, setLoading] = useState(true); // Set initial loading state to true
+  const [likeLoading, setLikeLoading] = useState(false); // Separate loading state for like button
   const numericalId = Number(id);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000); 
+  }, []);
 
   const handleClick = (event) => {
-    if (!like) {
+    if (!like && !likeLoading) {
       setLike(true);
+      setLikeLoading(true);
       const newVoteCount = vote + 1;
       setVotes(newVoteCount);
 
-      postLike(numericalId, { inc_votes: newVoteCount })
+      postLike(numericalId, { inc_votes: 1 })
         .then((response) => {
-          setVotes(response.votes)
+          setVotes(response.votes);
+          setLikeLoading(false);
         })
         .catch((error) => {
           console.error("Error posting like:", error);
+          setLike(false);
+          setVotes(vote);
+          setLikeLoading(false);
         });
     }
   };
 
-  
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
-        <Card sx={{ maxWidth: 800, margin: "auto", mt: 4, p: 2 }}>
+    <Card sx={{ maxWidth: 800, margin: "auto", mt: 4, p: 2, backgroundColor: 'lightgray' }}>
       <CardContent>
         <Typography variant="h4" component="div" gutterBottom>
           {articleDetails.topic}
@@ -64,13 +89,19 @@ export const FullArticle = ({ id, articleDetails }) => {
             max={99}
             sx={{ cursor: "pointer" }}
           >
-            {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            {likeLoading ? (
+              <CircularProgress size={24} />
+            ) : like ? (
+              <FavoriteIcon />
+            ) : (
+              <FavoriteBorderIcon />
+            )}
           </Badge>
           <Typography variant="h6" component="div">
             {new Date(articleDetails.created_at).toLocaleDateString()}
           </Typography>
         </Box>
-        <PostComment id = {id}/>
+        <PostComment id={id} />
         <CommentList id={id} />
       </CardContent>
     </Card>

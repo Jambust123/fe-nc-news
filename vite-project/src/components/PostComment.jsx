@@ -4,21 +4,34 @@ import Input from "@mui/joy/Input";
 import { postComment } from "../utils/api";
 import LocalPostOfficeRoundedIcon from "@mui/icons-material/LocalPostOfficeRounded";
 
-export const PostComment = ({id}) => {
+export const PostComment = ({ id }) => {
   const [newComment, setNewComment] = React.useState("");
+  const [commentSubmitted, setCommentSubmitted] = React.useState(false);
   const numericalId = Number(id);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(newComment);
+
+    if (!newComment.trim()) {
+      alert("Comment cannot be empty");
+      return;
+    }
+
     const commentBody = {
-        author: "weegembump",
-        body: newComment,
+      author: "weegembump",
+      body: newComment,
     };
-    postComment(numericalId, commentBody).then((response) => {
-        if(response) alert("comment posted")
-    })
-    setNewComment('');
+
+    if (!commentSubmitted) {
+      setCommentSubmitted(true);
+      postComment(numericalId, commentBody).then((response) => {
+        if (response) alert("Comment posted");
+      });
+      setNewComment("");
+      setTimeout(() => {
+        setCommentSubmitted(false);
+      }, 5000);
+    }
   };
 
   return (
@@ -26,12 +39,17 @@ export const PostComment = ({id}) => {
       <Input
         placeholder="Post a comment here..."
         value={newComment}
+        required
         onChange={(event) => setNewComment(event.target.value)}
         endDecorator={
           <LocalPostOfficeRoundedIcon
             onClick={(event) => {
               event.stopPropagation();
-              handleSubmit(event);
+              if (newComment.trim()) {
+                handleSubmit(event);
+              } else {
+                alert("Comment cannot be empty");
+              }
             }}
             style={{ cursor: "pointer" }}
           />
