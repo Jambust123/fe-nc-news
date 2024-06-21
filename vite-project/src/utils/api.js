@@ -62,10 +62,10 @@ export const postLike = (id, vote) => {
     });
 };
 
-export const postComment = (numericalId, commentBody) => {
-  console.log(numericalId, commentBody);
+export const postComment = (articleId, commentBody) => {
+  console.log(articleId, commentBody);
   return ncnewsAPI
-    .post(`/articles/${numericalId}/comments`, commentBody)
+    .post(`/articles/${articleId}/comments`, commentBody)
     .then((res) => {
       console.log(res);
       return res.data.comment;
@@ -170,3 +170,14 @@ export const getArticlesByVoteDsc = () => {
       "Error posting like:", err.response ? err.response.data : err.message;
     });
 };
+
+export const getUsers = () => {
+  return ncnewsAPI
+   .get(`/users`)
+   .then((res) => {
+      return res.data.users;
+    })
+   .catch((err) => {
+      "Error posting like:", err.response? err.response.data : err.message;
+    });
+}

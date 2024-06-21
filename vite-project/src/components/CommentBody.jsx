@@ -3,10 +3,10 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/joy/Button";
+import Button from "@mui/material/Button";
 import { deleteComment } from "../utils/api";
 
-export const CommentBody = ({ comment }) => {
+export const CommentBody = ({ comment, loggedInUser }) => {
   const [noComment, setNoComment] = React.useState(false);
 
   const handleClick = (event) => {
@@ -14,7 +14,7 @@ export const CommentBody = ({ comment }) => {
     deleteComment(comment.comment_id);
   };
 
-  if (noComment)
+  if (noComment && comment.author === loggedInUser.username)
     return (
       <Card sx={{ maxWidth: 800, margin: "auto", mt: 4, p: 2 }}>
         <CardContent>
@@ -41,9 +41,11 @@ export const CommentBody = ({ comment }) => {
           <Typography variant="body2" component="div">
             Votes: {comment.votes}
           </Typography>
-          <Button onClick={handleClick} size="md" color="danger">
-            Delete
-          </Button>
+          {loggedInUser.username === comment.author && (
+            <Button onClick={handleClick} size="medium" color="error">
+              Delete
+            </Button>
+          )}
         </Box>
       </CardContent>
     </Card>

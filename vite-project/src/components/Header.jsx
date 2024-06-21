@@ -1,26 +1,55 @@
-import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Avatar, Box } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
-export const Header = () => {
+export const Header = ({ loggedInUser, setLoggedInUser }) => {
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
 
-const handleClick = (event) => {
-  navigate(`/homepage`);
-}
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profile');
+    handleMenuClose();
+  };
+
+  const handleLogout = () => {
+    setLoggedInUser('');
+    handleMenuClose();
+    navigate('/');
+  };
 
   return (
-    <AppBar onClick={handleClick} position="static" sx={{ backgroundColor: 'darkred' }}>
+    <AppBar position="static" sx={{ backgroundColor: 'purple' }}>
       <Toolbar>
-        <IconButton edge="start" color="inherit" sx={{ mr: 2 }}>
-          <img src="../../public/downloadfile-3.jpg" alt="logo" style={{ height: '50px' }}/>
+        <IconButton edge="start" color="inherit" sx={{ mr: 2 }} onClick={() => navigate('/homepage')}>
+          <img src="../../public/downloadfile-3.jpg" alt="logo" style={{ height: '50px' }} />
         </IconButton>
         <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
           Hello World!
         </Typography>
-        <Typography variant="h6" component="div" sx={{ ml: "auto" }}>
-        Your Daily Dose of Global Insights
-        </Typography>
+        <Box display="flex" alignItems="center">
+          <Typography variant="h6" component="div" sx={{ mr: 2 }}>
+            {loggedInUser.name}
+          </Typography>
+          <IconButton onClick={handleMenuClick} color="inherit">
+            <Avatar src={loggedInUser.avatar_url} alt={loggedInUser.name} />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu>
+        </Box>
       </Toolbar>
     </AppBar>
   );

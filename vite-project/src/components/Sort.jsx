@@ -53,12 +53,7 @@ export const Sort = ({ setArticles }) => {
           <Button
             variant="contained"
             {...bindTrigger(popupState)}
-            sx={{
-              backgroundColor: "grey",
-              "&:hover": {
-                backgroundColor: "darkgrey",
-              },
-            }}
+            sx={{ marginTop: '0px', backgroundColor: 'green', '&:hover': { backgroundColor: 'purple' } }}
           >
             Sort
           </Button>

@@ -1,68 +1,46 @@
 import * as React from "react";
-import { styled } from "@mui/joy/styles";
-import Input from "@mui/joy/Input";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import { postComment } from "../utils/api";
-import LocalPostOfficeRoundedIcon from "@mui/icons-material/LocalPostOfficeRounded";
 
-export const PostComment = ({ id }) => {
-  const [newComment, setNewComment] = React.useState("");
-  const [commentSubmitted, setCommentSubmitted] = React.useState(false);
-  const numericalId = Number(id);
+export const PostComment = ({ id, loggedInUser }) => {
+  const [comment, setComment] = React.useState("");
+  const [isPosting, setIsPosting] = React.useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (!newComment.trim()) {
-      alert("Comment cannot be empty");
-      return;
-    }
-
-    const commentBody = {
-      author: "weegembump",
-      body: newComment,
-    };
-
-    if (!commentSubmitted) {
-      setCommentSubmitted(true);
-      postComment(numericalId, commentBody).then((response) => {
-        if (response) alert("Comment posted");
+    setIsPosting(true);
+    postComment(id, { username: loggedInUser.username, body: comment })
+      .then((newComment) => {
+        setComment("");
+        setIsPosting(false);
+      })
+      .catch((error) => {
+        console.error("Error posting comment:", error);
+        setIsPosting(false);
       });
-      setNewComment("");
-      setTimeout(() => {
-        setCommentSubmitted(false);
-      }, 5000);
-    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Input
-        placeholder="Post a comment here..."
-        value={newComment}
-        required
-        onChange={(event) => setNewComment(event.target.value)}
-        endDecorator={
-          <LocalPostOfficeRoundedIcon
-            onClick={(event) => {
-              event.stopPropagation();
-              if (newComment.trim()) {
-                handleSubmit(event);
-              } else {
-                alert("Comment cannot be empty");
-              }
-            }}
-            style={{ cursor: "pointer" }}
-          />
-        }
-        sx={{
-          "--Input-minHeight": "56px",
-          "--Input-radius": "6px",
-          border: "1px solid #ccc",
-          padding: "0 12px",
-          display: "flex",
-          alignItems: "center",
-        }}
+    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
+      <TextField
+        label="Add a comment"
+        multiline
+        fullWidth
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        variant="outlined"
+        margin="normal"
       />
-    </form>
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={isPosting}
+      >
+        {isPosting ? "Posting..." : "Post Comment"}
+      </Button>
+    </Box>
   );
 };

@@ -12,19 +12,22 @@ import { useState, useEffect } from "react";
 import { CommentList } from "./CommentList";
 import { PostComment } from "./PostComment";
 import { postLike } from "../utils/api";
+import { useParams } from "react-router-dom";
 
-export const FullArticle = ({ id, articleDetails, setArticleDetails }) => {
+export const FullArticle = ({ articleDetails, loggedInUser }) => {
   const [like, setLike] = useState(false);
-  const [vote, setVotes] = useState(Number(articleDetails.votes) || 0);
-  const [loading, setLoading] = useState(true); // Set initial loading state to true
-  const [likeLoading, setLikeLoading] = useState(false); // Separate loading state for like button
+  const [vote, setVotes] = useState(0);
+  const [loading, setLoading] = useState(true); 
+  const [likeLoading, setLikeLoading] = useState(false); 
+  const { id } = useParams()
   const numericalId = Number(id);
 
   useEffect(() => {
-    setTimeout(() => {
+    if (articleDetails && Object.keys(articleDetails).length > 0) {
+      setVotes(Number(articleDetails.votes) || 0);
       setLoading(false);
-    }, 1000); 
-  }, []);
+    }
+  }, [articleDetails]);
 
   const handleClick = (event) => {
     if (!like && !likeLoading) {
@@ -61,26 +64,26 @@ export const FullArticle = ({ id, articleDetails, setArticleDetails }) => {
   }
 
   return (
-    <Card sx={{ maxWidth: 800, margin: "auto", mt: 4, p: 2, backgroundColor: 'lightgray' }}>
+    <Card sx={{ maxWidth: 800, margin: "auto", mt: 4, p: 2, backgroundColor: 'white' }}>
       <CardContent>
         <Typography variant="h4" component="div" gutterBottom>
-          {articleDetails.topic}
+          {articleDetails?.topic}
         </Typography>
         <Typography variant="h2" component="div" gutterBottom>
-          {articleDetails.title}
+          {articleDetails?.title}
         </Typography>
         <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-          By {articleDetails.author}
+          By {articleDetails?.author}
         </Typography>
         <CardMedia
           component="img"
           height="400"
-          image={articleDetails.article_img_url}
-          alt={articleDetails.title}
+          image={articleDetails?.article_img_url}
+          alt={articleDetails?.title}
           sx={{ borderRadius: 2, mb: 2 }}
         />
         <Typography variant="body1" component="p" gutterBottom>
-          {articleDetails.body}
+          {articleDetails?.body}
         </Typography>
         <Box display="flex" justifyContent="space-between" mt={2}>
           <Badge
@@ -98,11 +101,11 @@ export const FullArticle = ({ id, articleDetails, setArticleDetails }) => {
             )}
           </Badge>
           <Typography variant="h6" component="div">
-            {new Date(articleDetails.created_at).toLocaleDateString()}
+            {new Date(articleDetails?.created_at).toLocaleDateString()}
           </Typography>
         </Box>
-        <PostComment id={id} />
-        <CommentList id={id} />
+        <PostComment id={id} loggedInUser={loggedInUser}/>
+        <CommentList id={id} loggedInUser={loggedInUser}/>
       </CardContent>
     </Card>
   );
