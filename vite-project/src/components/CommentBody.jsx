@@ -3,7 +3,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Tooltip from "@mui/material/Tooltip";
 import { deleteComment } from "../utils/api";
 
 export const CommentBody = ({ comment, loggedInUser }) => {
@@ -42,9 +44,20 @@ export const CommentBody = ({ comment, loggedInUser }) => {
             Votes: {comment.votes}
           </Typography>
           {loggedInUser.username === comment.author && (
-            <Button onClick={handleClick} size="medium" color="error">
-              Delete
-            </Button>
+            <Tooltip title="Delete Comment" arrow>
+              <IconButton
+                onClick={handleClick}
+                color="error"
+                sx={{
+                  backgroundColor: "rgba(255, 0, 0, 0.1)",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 0, 0, 0.2)",
+                  },
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           )}
         </Box>
       </CardContent>
