@@ -1,32 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Box, Avatar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { getUsers } from '../utils/api';
 
-export const Login = ({ setLoggedInUser }) => {
+export const CreateAccount = () => {
   const [username, setUsername] = useState('');
-  const [allUsers, setAllUsers] = useState([]);
+  const [name, setName] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getUsers().then((users) => {
-      setAllUsers(users);
-    });
-  }, []);
-
-  const handleLogin = () => {
-    const userExists = allUsers.some(user => user.username === username);
-    if (userExists) {
-      const loggedInUser = allUsers.find(user => user.username === username);
-      setLoggedInUser(loggedInUser);
-      navigate('/homepage'); 
-    } else {
-      alert('Username not found');
-    }
+  const handleCreateAccount = () => {
+    // Handle create account logic here
+    console.log('Creating account with:', { username, name, profilePicture });
   };
 
-  const handleCreateAccount = () => {
-    navigate('/create-account');
+  const handleBackToLogin = () => {
+    navigate('/');
   };
 
   return (
@@ -41,7 +29,7 @@ export const Login = ({ setLoggedInUser }) => {
           sx={{ width: 100, height: 100, marginBottom: '20px' }}
         />
         <Typography variant="h4" component="h1" gutterBottom>
-          Login
+          Create Account
         </Typography>
         <TextField
           label="Username"
@@ -50,17 +38,30 @@ export const Login = ({ setLoggedInUser }) => {
           margin="normal"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          onSubmit={handleLogin}
         />
-        <Button
-          variant="contained"
-          color="primary"
+        <TextField
+          label="Name"
+          variant="outlined"
           fullWidth
-          onClick={handleLogin}
-          sx={{ marginTop: '20px', backgroundColor: 'green', '&:hover': { backgroundColor: 'purple' } }}
-        >
-          Login
-        </Button>
+          margin="normal"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <TextField
+          label="Profile Picture URL"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={profilePicture}
+          onChange={(e) => setProfilePicture(e.target.value)}
+        />
+        {profilePicture && (
+          <Avatar
+            src={profilePicture}
+            alt="Profile Picture"
+            style={{ marginTop: '20px', width: '100px', height: '100px' }}
+          />
+        )}
         <Button
           variant="contained"
           color="primary"
@@ -68,7 +69,16 @@ export const Login = ({ setLoggedInUser }) => {
           onClick={handleCreateAccount}
           sx={{ marginTop: '20px', backgroundColor: 'green', '&:hover': { backgroundColor: 'purple' } }}
         >
-          Create New Account
+          Create Account
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={handleBackToLogin}
+          sx={{ marginTop: '20px', backgroundColor: 'green', '&:hover': { backgroundColor: 'purple' } }}
+        >
+          Back to Login
         </Button>
       </Box>
     </Container>

@@ -1,12 +1,12 @@
 import { Typography } from "@mui/material";
 import { Card } from "@mui/material";
-import { CardContent } from "@mui/joy";
+import { CardContent } from "@mui/material";
 import { getCommentsByArticleId } from "../utils/api";
 import { CommentBody } from "./CommentBody";
 import Box from "@mui/material/Box";
 import { useState, useEffect } from "react";
 
-export const CommentList = ({ id }) => {
+export const CommentList = ({ id, loggedInUser }) => {
   const [commentState, setCommentState] = useState([]);
 
 
@@ -25,7 +25,7 @@ export const CommentList = ({ id }) => {
     return (
       <Box>
         {commentState.map((comment) => {
-          return <CommentBody key={comment.comment_id} comment={comment} />;
+          return <CommentBody key={comment.comment_id} comment={comment} loggedInUser={loggedInUser}/>;
         })}
       </Box>
     );

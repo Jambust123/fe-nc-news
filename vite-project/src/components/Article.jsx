@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getArticleById } from "../utils/api";
 import { FullArticle } from "./FullArticle";
 
-export const Article = (articleId) => {
+export const Article = ({articleId, loggedInUser}) => {
   const { id } = useParams();
   parseInt(id);
   const [articleDetails, setArticleDetails] = useState({});
@@ -17,7 +17,7 @@ export const Article = (articleId) => {
 
   return (
   <>
-  <FullArticle key={id} id={id} articleDetails={articleDetails} setArticleDetails={setArticleDetails}/>
+  <FullArticle key={id} id={id} articleDetails={articleDetails} setArticleDetails={setArticleDetails} loggedInUser={loggedInUser}/>
   </>
   );
 };

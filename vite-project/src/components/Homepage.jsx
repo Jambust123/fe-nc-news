@@ -9,10 +9,8 @@ export const Homepage = ({setArticleId}) => {
 
   return (
     <div>
-      <h2>homepage</h2>
       <label>
         <DropDown setTopics={setTopics} setArticles={setArticles}/>
-        
       </label>
       <ul>
         <ArticleList topics={topics} setArticleId={setArticleId} articles={articles} setArticles={setArticles}/>
